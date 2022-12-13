@@ -31,8 +31,8 @@ sudo systemctl daemon-reload
 sudo systemctl start mongod
 mongorestore --gzip --archive=smartshark_2_1.agz
 ```
-3. Run ...
-4. Run ...
+3. Run data_extraction.py to connect with database and download JSON file.
+4. Run data_analysis.js
 
 
 ## Useful links
