@@ -1,4 +1,4 @@
-# COMP-5117
+# COMP-5117 Software Mining Repository
 This repository is the final project for course <a href="http://olgabaysal.com/teaching/fall22/comp5117_f22.html">COMP-5117</a>, supervised by Prof. Olga.
 
 ## Introduction
