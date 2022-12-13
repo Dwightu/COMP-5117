@@ -5,7 +5,7 @@ const originalFileName = arguments[0] || "./search.json";
 let data = JSON.parse(fs.readFileSync(originalFileName));
 console.log(data.issues.length);
 
-// 给数据瘦身
+// filter unnecessary segments
 data.issues.forEach(item => {
   for (key in item.fields) {
     if (key.includes("customfield")) {
@@ -13,9 +13,15 @@ data.issues.forEach(item => {
     }
   }
 });
-// 所有issue记录中Issue最早创建时间和最晚创建时间
 
-// 所有issue中priority的统计，有哪些，分别有多少个
+// write file
+const outputFileName = arguments[1] || "./cleaned.json";
+fs.writeFile(outputFileName, JSON.stringify(data), (err) => {
+    if (err) return console.error(err);
+    console.log("Data saved");
+});
+
+// Priority count
 const priorityCount = {};
 data.issues.forEach(issue => {
   const priority = issue.fields.priority.name;
@@ -27,7 +33,7 @@ data.issues.forEach(issue => {
 });
 console.log(priorityCount);
 
-// 所有issue中type的统计，有哪些，分别有多少个
+// type count
 const typeCount = {};
 data.issues.forEach(issue => {
   const type = issue.fields.issuetype.name;
@@ -39,19 +45,7 @@ data.issues.forEach(issue => {
 });
 console.log(typeCount);
 
-// priority和type的组合统计，有哪些，分别有多少个
-// const priorityTypeCount = {};
-// data.issues.forEach(issue => {
-//   const priority = issue.fields.priority.name;
-//   const type = issue.fields.issuetype.name;
-//   const key = `${priority}-${type}`;
-//   if (!priorityTypeCount[key]) {
-//     priorityTypeCount[key] = 1;
-//   } else {
-//     priorityTypeCount[key]++;
-//   }
-// });
-// console.log(priorityTypeCount);
+// priority and type count
 const priorityTypeCount = {};
 const typePriorityCount = {};
 data.issues.forEach(issue => {
@@ -67,7 +61,7 @@ data.issues.forEach(issue => {
 console.log(priorityTypeCount);
 console.log(typePriorityCount);
 
-// 多少个ticket是有assignee的多少没有
+// ticket_asignee
 const assigneeCount = {};
 data.issues.forEach(issue => {
   const assignee = issue.fields.assignee;
@@ -86,7 +80,8 @@ data.issues.forEach(issue => {
   }
 });
 console.log(assigneeCount);
-// createor有几个人？他们create的ticket priority数量分别是多少？
+
+// creator_priority
 const creatorCount = {};
 const creatorPriorityCount = {};
 data.issues.forEach(issue => {
@@ -104,7 +99,7 @@ data.issues.forEach(issue => {
 console.log(creatorCount);
 console.log(creatorPriorityCount);
 
-// watch count与priority的关系
+// watch count and priority
 const watchCountPriorityCount = {};
 const priorityWatchCountCount = {};
 data.issues.forEach(issue => {
@@ -120,7 +115,7 @@ data.issues.forEach(issue => {
 console.log(watchCountPriorityCount);
 console.log(priorityWatchCountCount);
 
-// 有多少issue是已经解决了的？（有resolutiondate），各种重要级的issue平均需要花多少时间解决？
+// unresolved ticket
 const resolutionDateCount = {};
 const priorityResolutionDateCount = {};
 const priorityResolutionDateAverage = {};
@@ -148,14 +143,3 @@ Object.keys(priorityResolutionDateCount).forEach(priority => {
   priorityResolutionDateAverage[priority] = average;
 });
 console.log(priorityResolutionDateAverage);
-
-
-
-
-
-// write file
-const outputFileName = arguments[1] || "./cleaned.json";
-fs.writeFile(outputFileName, JSON.stringify(data), (err) => {
-    if (err) return console.error(err);
-    console.log("Data saved");
-});
