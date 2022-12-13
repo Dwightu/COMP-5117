@@ -1,5 +1,5 @@
 # COMP-5117 Software Mining Repository
-This repository is the final project for course <a href="http://olgabaysal.com/teaching/fall22/comp5117_f22.html">COMP-5117</a>, supervised by Prof. Olga.
+This repository is the final project for course <a href="http://olgabaysal.com/teaching/fall22/comp5117_f22.html">COMP-5117</a>.
 
 ## Introduction
 Agile software development have been widely adopted by many large companies, such as Apple, Microsoft, and IBM. Jira is a proprietary issue tracking product developed
